@@ -249,12 +249,12 @@ func (d *Dataset) SendSnapshot(output io.Writer) error {
 // properties.
 // A full list of available ZFS properties may be found here:
 // https://www.freebsd.org/cgi/man.cgi?zfs(8).
-func CreateVolume(name string, size uint64, properties map[string]string) (*Dataset, error) {
+func CreateVolume(name string, size string, properties map[string]string) (*Dataset, error) {
 	args := make([]string, 4, 5)
 	args[0] = "create"
 	args[1] = "-p"
 	args[2] = "-V"
-	args[3] = strconv.FormatUint(size, 10)
+	args[3] = size
 	if properties != nil {
 		args = append(args, propsSlice(properties)...)
 	}

@@ -160,7 +160,7 @@ func TestCreateFilesystemWithProperties(t *testing.T) {
 
 func TestVolumes(t *testing.T) {
 	zpoolTest(t, func() {
-		v, err := zfs.CreateVolume("test/volume-test", uint64(pow2(23)), nil)
+		v, err := zfs.CreateVolume("test/volume-test", "1Gb", nil)
 		ok(t, err)
 
 		// volumes are sometimes "busy" if you try to manipulate them right away
@@ -350,7 +350,7 @@ func TestDiff(t *testing.T) {
 		snapshot, err := fs.Snapshot("snapshot", false)
 		ok(t, err)
 
-		unicodeFile, err := os.Create(filepath.Join(fs.Mountpoint, "i ❤ unicode"))
+		unicodeFile, err := os.Create(filepath.Join(fs.Mountpoint, "i ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ unicode"))
 		ok(t, err)
 
 		err = os.Rename(movedFile.Name(), movedFile.Name()+"-new")
@@ -375,13 +375,13 @@ func TestDiff(t *testing.T) {
 				Change:  zfs.Renamed,
 				NewPath: "/test/origin/file-new",
 			},
-			"/test/origin/i ❤ unicode": &zfs.InodeChange{
-				Path:   "❤❤ unicode ❤❤",
+			"/test/origin/i ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ unicode": &zfs.InodeChange{
+				Path:   "ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ unicode ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤",
 				Type:   zfs.File,
 				Change: zfs.Created,
 			},
 			unicodePath: &zfs.InodeChange{
-				Path:   "❤❤ unicode ❤❤",
+				Path:   "ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ unicode ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤",
 				Type:   zfs.File,
 				Change: zfs.Created,
 			},
@@ -400,7 +400,7 @@ func TestDiff(t *testing.T) {
 
 		equals(t, 1, len(wants))
 		for _, want := range wants {
-			equals(t, "❤❤ unicode ❤❤", want.Path)
+			equals(t, "ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ unicode ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤", want.Path)
 		}
 
 		ok(t, movedFile.Close())
