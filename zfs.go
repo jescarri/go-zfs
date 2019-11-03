@@ -23,19 +23,19 @@ const (
 // The field definitions can be found in the ZFS manual:
 // http://www.freebsd.org/cgi/man.cgi?zfs(8).
 type Dataset struct {
-	Name          string
-	Origin        string
-	Used          uint64
-	Avail         uint64
-	Mountpoint    string
-	Compression   string
-	Type          string
-	Written       uint64
-	Volsize       uint64
-	Logicalused   uint64
-	Usedbydataset uint64
-	Quota         uint64
-	Referenced    uint64
+	Name          string `json: "name"`
+	Origin        string `json: "origin"`
+	Used          uint64 `json: "used"`
+	Avail         uint64 `json: "available"`
+	Mountpoint    string `json: "mountpoint"`
+	Compression   string `json: "compression"`
+	Type          string `json: "type"`
+	Written       uint64 `json: "written"`
+	Volsize       uint64 `json: "volsize"`
+	Logicalused   uint64 `json: "logical_used"`
+	Usedbydataset uint64 `json: "used_by_dataset"`
+	Quota         uint64 `json: "quota"`
+	Referenced    uint64 `json: "referenced"`
 }
 
 // InodeType is the type of inode as reported by Diff

@@ -15,16 +15,16 @@ const (
 // Zpool is a ZFS zpool.  A pool is a top-level structure in ZFS, and can
 // contain many descendent datasets.
 type Zpool struct {
-	Name          string
-	Health        string
-	Allocated     uint64
-	Size          uint64
-	Free          uint64
-	Fragmentation uint64
-	ReadOnly      bool
-	Freeing       uint64
-	Leaked        uint64
-	DedupRatio    float64
+	Name          string  `json: "name"`
+	Health        string  `json: "health"`
+	Allocated     uint64  `json: "allocated"`
+	Size          uint64  `json: "size"`
+	Free          uint64  `json: "free"`
+	Fragmentation uint64  `json: "fragmentation"`
+	ReadOnly      bool    `json: "read_only"`
+	Freeing       uint64  `json: "freeing"`
+	Leaked        uint64  `json: "leaked"`
+	DedupRatio    float64 `json: "dedup_ratio"`
 }
 
 // zpool is a helper function to wrap typical calls to zpool.
