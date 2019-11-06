@@ -316,6 +316,19 @@ func (d *Dataset) GetProperty(key string) (string, error) {
 	return out[0][2], nil
 }
 
+//GetAllProperties returns ALL properties for the dataset.
+func (d *Dataset) GetAllProperties() (map[string]string, error) {
+	props := make(map[string]string)
+	out, err := zfs("get", "-H", "all", d.Name)
+	if err != nil {
+		return props, err
+	}
+	for _, line := range out {
+		props[line[1]] = line[2]
+	}
+	return props, nil
+}
+
 // Rename renames a dataset.
 func (d *Dataset) Rename(name string, createParent bool, recursiveRenameSnapshots bool) (*Dataset, error) {
 	args := make([]string, 3, 5)
